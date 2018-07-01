@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+  Created by TIBCO BusinessEvents POM generation utility be-maven-pom-generator
+  Creation datetime: Sat Jun 30 12:13:25 CEST 2018
+-->
+<project>
+  <modelVersion>4.0.0</modelVersion>
+  <groupId>net.genielogiciel.cep-demo</groupId>
+  <artifactId>tibcobe-cep-demo-fraud-detector</artifactId>
+  <version>1.0.0</version>
+  <packaging>ear</packaging>
+  <build>
+    <plugins>
+      <plugin>
+        <groupId>com.tibco.be.maven.plugin</groupId>
+        <artifactId>be-maven-plugin</artifactId>
+        <version>5.5.0</version>
+        <extensions>true</extensions>
+        <configuration>
+          <beProjectDetails>
+            <beHome>F:/TIBCO_HOMES/HOME1/be/5.5</beHome>
+            <jdkHome/>
+            <earLocation>target</earLocation>
+            <projLibLocation>target</projLibLocation>
+          </beProjectDetails>
+          <projLibResources/>
+          <teaConfig>
+            <teaUrl>http://localhost:8777</teaUrl>
+            <applicationName/>
+            <username>admin</username>
+            <password>admin</password>
+          </teaConfig>
+          <appImageConfig>
+            <cddFileLocation/>
+            <targetDir/>
+            <baseBEImage/>
+            <maintainer>cep-demo-fraud-detector</maintainer>
+            <email/>
+            <labels>ApplicationName=cep-demo-fraud-detector</labels>
+            <appImage/>
+            <overwriteDockerfile>false</overwriteDockerfile>
+          </appImageConfig>
+          <dockerRegistryConfig>
+            <property>
+              <key>Repository</key>
+              <value/>
+            </property>
+            <property>
+              <key>Url</key>
+              <value/>
+            </property>
+            <property>
+              <key>TagImage</key>
+              <value/>
+            </property>
+          </dockerRegistryConfig>
+          <baseImageConfig>
+            <generateBaseImage>false</generateBaseImage>
+            <useBEHome>true</useBEHome>
+            <be_home/>
+            <installers_location/>
+            <edition/>
+            <version/>
+            <image_version/>
+            <addons/>
+            <hf/>
+            <as_hf/>
+            <dockerfile>Dockerfile</dockerfile>
+          </baseImageConfig>
+        </configuration>
+      </plugin>
+    </plugins>
+  </build>
+  <properties>
+    <reuseForks>false</reuseForks>
+  </properties>
+</project>
+

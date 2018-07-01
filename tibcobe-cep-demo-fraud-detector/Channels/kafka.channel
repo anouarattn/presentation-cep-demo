@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<channel:Channel xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:channel="http:///com/tibco/cep/designtime/core/model/service/channel" xmlns:designtime="http:///com/tibco/cep/designtime/core/model/designtime_ontology.ecore" namespace="/Channels/" folder="/Channels/" name="kafka" description="" GUID="73A3B846-8F24-8342-F9E3-E9692EF9246B" ownerProjectName="tibcobe-cep-demo-fraud-detector">
+  <driver label="KAFKA" channel="/">
+    <properties>
+      <properties xsi:type="designtime:SimpleProperty" name="kafka.broker.urls" value="kafka1:9092" mandatory="true"/>
+      <properties xsi:type="designtime:SimpleProperty" name="kafka.security.protocol" value="PLAINTEXT" mandatory="true"/>
+      <properties xsi:type="designtime:SimpleProperty" name="kafka.sasl.mechanism" value="PLAIN"/>
+      <properties xsi:type="designtime:SimpleProperty" name="kafka.trusted.certs.folder" value=""/>
+      <properties xsi:type="designtime:SimpleProperty" name="kafka.keystore.identity" value=""/>
+      <properties xsi:type="designtime:SimpleProperty" name="kafka.truststore.password" value=""/>
+    </properties>
+    <destinations folder="/Channels/kafka/" name="customerTransaction_dest" description="" GUID="1A44AE54-B251-E172-C631-BB95652B91A7" ownerProjectName="tibcobe-cep-demo-fraud-detector" eventURI="/Events/Transaction" serializerDeserializerClass="com.tibco.cep.driver.kafka.serializer.KafkaMapSerializer" driverConfig="//@driver">
+      <properties>
+        <properties xsi:type="designtime:SimpleProperty" name="IncludeEventType" value="ALWAYS" mandatory="true"/>
+        <properties xsi:type="designtime:SimpleProperty" name="topic.name" value="T.CustomerTransaction" mandatory="true"/>
+        <properties xsi:type="designtime:SimpleProperty" name="group.id" value="be_group"/>
+        <properties xsi:type="designtime:SimpleProperty" name="client.id" value=""/>
+        <properties xsi:type="designtime:SimpleProperty" name="consumer.threads" value="1"/>
+        <properties xsi:type="designtime:SimpleProperty" name="heartbeat.interval.msec" value="3000"/>
+        <properties xsi:type="designtime:SimpleProperty" name="session.timeout.msec" value="30000"/>
+        <properties xsi:type="designtime:SimpleProperty" name="enable.autocommit" value="true"/>
+        <properties xsi:type="designtime:SimpleProperty" name="autocommit.interval" value="5000"/>
+        <properties xsi:type="designtime:SimpleProperty" name="sync.sender" value="true"/>
+        <properties xsi:type="designtime:SimpleProperty" name="sync.sender.max.wait" value="30000"/>
+        <properties xsi:type="designtime:SimpleProperty" name="compression.type" value="none"/>
+        <properties xsi:type="designtime:SimpleProperty" name="message.key.rf" value=""/>
+      </properties>
+    </destinations>
+    <driverType xsi:type="channel:DriverTypeInfo" driverTypeName="Kafka"/>
+  </driver>
+</channel:Channel>

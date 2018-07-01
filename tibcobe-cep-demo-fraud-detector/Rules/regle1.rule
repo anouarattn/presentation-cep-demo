@@ -1,0 +1,31 @@
+/**
+ * @description 
+ * @author DESKTOP-AQ4QGUU
+ */
+rule Rules.regle1 {
+	attribute {
+		priority = 5;
+		forwardChain = true;
+	}
+	declare {
+		Events.Transaction event1;
+		Events.Transaction event2;
+	}
+	when {
+		event1.AccountNumber == event2.AccountNumber;
+		
+		(event1.OperationType == "Payment" && event2.OperationType == "Payment")
+		|| (event1.OperationType == "CashWithdrawal" && event2.OperationType == "CashWithdrawal");
+		
+		Helpers.distanceCalculator(event1.Latitude,
+									event1.Longitude,
+									event1.Latitude,
+									event1.Longitude)>1000; // distance entre les deux emplacements des transactions superieur a 100km
+		
+	}
+	then {
+		
+		System.debugOut("suciptiblement fraude");
+		
+	}
+}

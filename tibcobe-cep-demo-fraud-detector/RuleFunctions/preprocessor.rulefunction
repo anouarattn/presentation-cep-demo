@@ -1,0 +1,17 @@
+/**
+ * @description 
+ */
+void rulefunction RuleFunctions.preprocessor {
+	attribute {
+		validity = ACTION;
+	}
+	scope {
+		Events.Transaction transaction;
+	}
+	body {
+		
+		if(!transaction.IsProxy)
+			Event.assertEvent(transaction);  // mettre l'évenement en memoire et le rendre disponible pour l'inference
+	
+	}
+}

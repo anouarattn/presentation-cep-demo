@@ -1,0 +1,25 @@
+/**
+ * @description 
+ * @author DESKTOP-AQ4QGUU
+ */
+rule Rules.regle2 {
+	attribute {
+		priority = 5;
+		forwardChain = true;
+	}
+	declare {
+		Events.Transaction event1;
+		Events.Transaction event2;
+		Events.Transaction event3;
+	}
+	when {
+		event1.AccountNumber == event2.AccountNumber; 
+		event1.AccountNumber == event3.AccountNumber;
+		event1.OperationType == "Payment" && event2.OperationType == "Payment" && event2.OperationType == "Payment";
+
+		event1.Value + event2.Value + event3.Value > 10000;  // trois transactions dans 30 min avec une valeurs superieur a 10k
+	}
+	then {
+		System.debugOut("trop de transactions");
+	}
+}
