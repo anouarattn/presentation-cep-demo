@@ -40,7 +40,7 @@ public class I {
 		map.put(LATITUDE, latitude);
 		map.put(LONGITUDE, longitude);
 		map.put(VALUE, value);
-		map.put(ISPROXY, true);
+		map.put(ISPROXY, false);
 		ByteArrayOutputStream fos = new ByteArrayOutputStream();
 		ObjectOutputStream oos = new ObjectOutputStream(fos);
 		oos.writeObject(map);
