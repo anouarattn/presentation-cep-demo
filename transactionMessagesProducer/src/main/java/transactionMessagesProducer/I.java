@@ -16,14 +16,9 @@ import org.apache.kafka.common.serialization.StringSerializer;
 
 public class I {
 	public static String KAFKA_BROKERS = "kafka1:9092";
-	public static Integer MESSAGE_COUNT = 1;
 	public static String CLIENT_ID = "client1";
 	public static String TOPIC_NAME = "T.CustomerTransaction";
 	public static String GROUP_ID_CONFIG = "be_group";
-	public static Integer MAX_NO_MESSAGE_FOUND_COUNT = 100;
-	public static String OFFSET_RESET_LATEST = "latest";
-	public static String OFFSET_RESET_EARLIER = "earliest";
-	public static Integer MAX_POLL_RECORDS = 1;
 	
 	public static final String OPERATIONTYPE = "OperationType";
 	public static final String ACCOUNTNUMBER = "AccountNumber";
@@ -32,7 +27,7 @@ public class I {
 	public static final String VALUE = "Value";
 	public static final String ISPROXY = "IsProxy";
 
-	public static byte[]  getMap(String operationType, int accountNumber,double latitude,double  longitude, double value ) throws IOException
+	public static byte[]  getMapArray(String operationType, String accountNumber,double latitude,double  longitude, double value, boolean isProxy ) throws IOException
 	{
 		Map<String,Object> map = new HashMap<>();
 		map.put(OPERATIONTYPE, operationType);
@@ -40,7 +35,7 @@ public class I {
 		map.put(LATITUDE, latitude);
 		map.put(LONGITUDE, longitude);
 		map.put(VALUE, value);
-		map.put(ISPROXY, false);
+		map.put(ISPROXY, isProxy);
 		ByteArrayOutputStream fos = new ByteArrayOutputStream();
 		ObjectOutputStream oos = new ObjectOutputStream(fos);
 		oos.writeObject(map);
@@ -58,5 +53,6 @@ public class I {
 		return new KafkaProducer<>(props);
 	}
 	
-
+	
+	
 }

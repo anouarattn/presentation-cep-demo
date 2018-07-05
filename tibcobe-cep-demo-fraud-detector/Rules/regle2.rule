@@ -15,11 +15,16 @@ rule Rules.regle2 {
 	when {
 		event1.AccountNumber == event2.AccountNumber; 
 		event1.AccountNumber == event3.AccountNumber;
-		event1.OperationType == "Payment" && event2.OperationType == "Payment" && event2.OperationType == "Payment";
+		event1.OperationType == "PAYEMENT" && event2.OperationType == "PAYEMENT" && event3.OperationType == "PAYEMENT";
 
 		event1.Value + event2.Value + event3.Value > 10000;  // trois transactions dans 30 min avec une valeurs superieur a 10k
 	}
 	then {
-		System.debugOut("trop de transactions");
+		
+		System.debugOut("\u001B[31m****** Fraude au "+event1.OperationType + " pour le client " + event1.AccountNumber+", trois transactions somme>10k \u001B[0m");
+		
+		Event.consumeEvent(event1);
+		Event.consumeEvent(event2);
+		Event.consumeEvent(event3);
 	}
 }

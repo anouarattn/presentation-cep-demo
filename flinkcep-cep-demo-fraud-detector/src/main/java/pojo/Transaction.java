@@ -1,9 +1,16 @@
 package pojo;
 
+
+/* 
+ *  Pojo representant l'evenement Transaction
+ *  Apache Flink a besoin obligatoirement des deux methodes equals et hashCode
+ *  
+ *  */
+
 public class Transaction {
 
 	private String operationType;
-	private int accountNumber;
+	private String accountNumber;
 	private double latitude;
 	private double longitude;
 	private double value;
@@ -17,11 +24,11 @@ public class Transaction {
 		this.operationType = operationType;
 	}
 
-	public int getAccountNumber() {
+	public String getAccountNumber() {
 		return accountNumber;
 	}
 
-	public void setAccountNumber(int lccountNumber) {
+	public void setAccountNumber(String lccountNumber) {
 		this.accountNumber = lccountNumber;
 	}
 
@@ -57,15 +64,31 @@ public class Transaction {
 		this.isProxy = isProxy;
 	}
 
+
+	public Transaction() {
+		super();
+	}
+
+	public Transaction(String operationType, String accountNumber, double latitude, double longitude, double value,
+			boolean isProxy) {
+		super();
+		this.operationType = operationType;
+		this.accountNumber = accountNumber;
+		this.latitude = latitude;
+		this.longitude = longitude;
+		this.value = value;
+		this.isProxy = isProxy;
+	}
+
 	@Override
 	public int hashCode() {
 		final int prime = 31;
 		int result = 1;
+		result = prime * result + ((accountNumber == null) ? 0 : accountNumber.hashCode());
 		result = prime * result + (isProxy ? 1231 : 1237);
 		long temp;
 		temp = Double.doubleToLongBits(latitude);
 		result = prime * result + (int) (temp ^ (temp >>> 32));
-		result = prime * result + accountNumber;
 		temp = Double.doubleToLongBits(longitude);
 		result = prime * result + (int) (temp ^ (temp >>> 32));
 		result = prime * result + ((operationType == null) ? 0 : operationType.hashCode());
@@ -83,11 +106,14 @@ public class Transaction {
 		if (getClass() != obj.getClass())
 			return false;
 		Transaction other = (Transaction) obj;
+		if (accountNumber == null) {
+			if (other.accountNumber != null)
+				return false;
+		} else if (!accountNumber.equals(other.accountNumber))
+			return false;
 		if (isProxy != other.isProxy)
 			return false;
 		if (Double.doubleToLongBits(latitude) != Double.doubleToLongBits(other.latitude))
-			return false;
-		if (accountNumber != other.accountNumber)
 			return false;
 		if (Double.doubleToLongBits(longitude) != Double.doubleToLongBits(other.longitude))
 			return false;
@@ -99,21 +125,6 @@ public class Transaction {
 		if (Double.doubleToLongBits(value) != Double.doubleToLongBits(other.value))
 			return false;
 		return true;
-	}
-
-	public Transaction() {
-		super();
-	}
-
-	public Transaction(String operationType, int accountNumber, double latitude, double longitude, double value,
-			boolean isProxy) {
-		super();
-		this.operationType = operationType;
-		this.accountNumber = accountNumber;
-		this.latitude = latitude;
-		this.longitude = longitude;
-		this.value = value;
-		this.isProxy = isProxy;
 	}
 	
 

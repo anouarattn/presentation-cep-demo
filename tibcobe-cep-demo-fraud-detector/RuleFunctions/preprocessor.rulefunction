@@ -10,8 +10,12 @@ void rulefunction RuleFunctions.preprocessor {
 	}
 	body {
 		
-		if(!transaction.IsProxy)
+		
+		System.debugOut("Transaction pour le compte " + transaction.AccountNumber + " - valeur " + transaction.Value);
+		
+		if(!transaction.IsProxy && String.startsWith(transaction.AccountNumber,"33" ))
 			Event.assertEvent(transaction);  // mettre l'évenement en memoire et le rendre disponible pour l'inference
+
 	
 	}
 }

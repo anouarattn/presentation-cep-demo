@@ -2,6 +2,6 @@
 <configuration:StudioProjectConfiguration xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:configuration="http:///com/tibco/cep/studio/common/configuration/model/project_configuration.ecore" name="tibcobe-cep-demo-fraud-detector" version="5.5.0" build="170" xpathVersion="2.0">
   <javaSourceFolderEntries entryType="JAVA_SOURCE_FOLDER" path="/cep-demo-fraud-detector/JavaSrc" readOnly="true"/>
   <javaSourceFolderEntries entryType="JAVA_SOURCE_FOLDER" path="/tibcobe-cep-demo-fraud-detector/JavaSrc" readOnly="true"/>
-  <enterpriseArchiveConfiguration name="cep-demo-fraud-detector" author="dev" version="7" path="C:\Users\dev\cep-demo-fraud-detector.ear" overwrite="true"/>
+  <enterpriseArchiveConfiguration name="cep-demo-fraud-detector" author="dev" version="19" path="C:\Users\dev\cep-demo-fraud-detector.ear" overwrite="true"/>
   <bpmnProcessSettings/>
 </configuration:StudioProjectConfiguration>

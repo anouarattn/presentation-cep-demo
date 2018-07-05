@@ -1,6 +1,7 @@
-<?xml version="1.0" encoding="UTF-8"?><event:SimpleEvent xmlns:event="http:///com/tibco/cep/designtime/core/model/event" xmlns:xmi="http://www.omg.org/XMI" xmi:version="2.0" namespace="/Events/" folder="/Events/" name="Transaction" description="" GUID="7FB101C5-945C-04D1-07A6-E6B2118EBA41" ownerProjectName="tibcobe-cep-demo-fraud-detector" superEventPath="" ttl="30" ttlUnits="Minutes" channelURI="/Channels/kafka" destinationName="customerTransaction_dest">
+<?xml version="1.0" encoding="UTF-8"?>
+<event:SimpleEvent xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:event="http:///com/tibco/cep/designtime/core/model/event" namespace="/Events/" folder="/Events/" name="Transaction" description="" GUID="7FB101C5-945C-04D1-07A6-E6B2118EBA41" ownerProjectName="tibcobe-cep-demo-fraud-detector" superEventPath="" ttl="30" ttlUnits="Minutes" channelURI="/Channels/kafka" destinationName="customerTransaction_dest">
   <properties name="OperationType" ownerProjectName="tibcobe-cep-demo-fraud-detector" ownerPath="/Events/Transaction"/>
-  <properties name="AccountNumber" ownerProjectName="tibcobe-cep-demo-fraud-detector" type="int" ownerPath="/Events/Transaction"/>
+  <properties name="AccountNumber" ownerProjectName="tibcobe-cep-demo-fraud-detector" ownerPath="/Events/Transaction"/>
   <properties name="Latitude" ownerProjectName="tibcobe-cep-demo-fraud-detector" type="double" ownerPath="/Events/Transaction"/>
   <properties name="Longitude" ownerProjectName="tibcobe-cep-demo-fraud-detector" type="double" ownerPath="/Events/Transaction"/>
   <properties name="Value" ownerProjectName="tibcobe-cep-demo-fraud-detector" type="double" ownerPath="/Events/Transaction"/>

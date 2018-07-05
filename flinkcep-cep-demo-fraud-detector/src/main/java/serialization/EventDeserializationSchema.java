@@ -12,6 +12,12 @@ import org.apache.flink.api.java.typeutils.TypeExtractor;
 import business.I;
 import pojo.Transaction;
 
+
+
+/* 
+ * Deserializer des bytes messages envoiyes depuis la topic kafka vers le pojo Transaction
+ * 
+ * */
 public class EventDeserializationSchema implements DeserializationSchema<Transaction> {
 	private static final long serialVersionUID = 1L;
 
@@ -28,7 +34,7 @@ public class EventDeserializationSchema implements DeserializationSchema<Transac
 		Transaction tr = new Transaction();
 		try {
 			m = (Map<String, Object>) ois.readObject();
-			tr.setAccountNumber((int) m.get(I.ACCOUNTNUMBER));
+			tr.setAccountNumber((String) m.get(I.ACCOUNTNUMBER));
 			tr.setOperationType((String) m.get(I.OPERATIONTYPE));
 			tr.setLatitude((double) m.get(I.LATITUDE));
 			tr.setLongitude((double) m.get(I.LONGITUDE));

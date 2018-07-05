@@ -1,0 +1,143 @@
+0 creation projet nom = tibcobe-cep-demo-fraud-detector
+
+1 - CREATION DU CHANNEL ET LA DESTINATION
+
+kafka broker : kafka1:9092
+nom topic : T.CustomerTransaction
+Group ID : be_group
+com.tibco.cep.driver.kafka.serializer.KafkaMapSerializer
+
+
+2 - CREATION DE L'EVENEMENT Transaction
+
+
+ttl = 30 min a setté après 
+
+Default destination = destination deja crée
+
+<properties name="OperationType" ownerProjectName="tibcobe-cep-demo-fraud-detector" ownerPath="/Events/Transaction"/>
+<properties name="AccountNumber" ownerProjectName="tibcobe-cep-demo-fraud-detector" ownerPath="/Events/Transaction"/>
+<properties name="Latitude" ownerProjectName="tibcobe-cep-demo-fraud-detector" type="double" ownerPath="/Events/Transaction"/>
+<properties name="Longitude" ownerProjectName="tibcobe-cep-demo-fraud-detector" type="double" ownerPath="/Events/Transaction"/>
+<properties name="Value" ownerProjectName="tibcobe-cep-demo-fraud-detector" type="double" ownerPath="/Events/Transaction"/>
+<properties name="IsProxy" ownerProjectName="tibcobe-cep-demo-fraud-detector" type="boolean" ownerPath="/Events/Transaction"/>
+
+
+Important dans la destination Default event : /Events/Transaction   
+
+
+3 - CALCULATEUR DE DISTANCE GPS 
+
+Cree dossier Helers
+Nom : distanceCalculator  elle doirt retourner int
+
+	attribute {
+		validity = CONDITION;
+	}
+	scope {
+		double lat1;double lng1; double lat2; double lng2;
+	}
+	body {
+		double earthRadius = 6371000; //meters
+	    double dLat = Math.toRadians(lat2-lat1);
+	    double dLng = Math.toRadians(lng2-lng1);
+	    double a = Math.sin(dLat/2) * Math.sin(dLat/2) +
+	               Math.cos(Math.toRadians(lat1)) * Math.cos(Math.toRadians(lat2)) *
+	               Math.sin(dLng/2) * Math.sin(dLng/2);
+	    double c = 2 * Math.atanRectangularToPolar(Math.sqrt(a), Math.sqrt(1-a));
+	    double dist = earthRadius * c;
+
+	    return dist/1000;
+	}
+	
+	
+4 - FONCTION DE FILTRE, PREPROCESSING
+
+	scope {
+		Events.Transaction transaction;
+	}
+	body {
+		
+		
+		System.debugOut("Transaction pour le compte " + transaction.AccountNumber + " - valeur " + transaction.Value);
+		
+		if(!transaction.IsProxy && String.startsWith(transaction.AccountNumber,"33" ))
+			Event.assertEvent(transaction);  // mettre l'évenement en memoire et le rendre disponible pour l'inference
+
+	
+	}
+	
+5 - DEFENITION DES REGLES
+
+Regle1 
+
+attribute {
+		priority = 5;
+		forwardChain = true;
+	}
+	declare {
+		Events.Transaction event1;
+		Events.Transaction event2;
+	}
+	when {
+		event1.AccountNumber == event2.AccountNumber;
+		
+		(event1.OperationType == "PAYEMENT" && event2.OperationType == "PAYEMENT")
+		|| (event1.OperationType == "WITHDRAWAL" && event2.OperationType == "WITHDRAWAL");
+		
+		Helpers.distanceCalculator(event1.Latitude,
+									event1.Longitude,
+									event2.Latitude,
+									event2.Longitude)>100; // distance entre les deux emplacements des transactions superieur a 100km
+		
+	}
+	then {
+		
+		System.debugOut("\u001B[31m****** Fraude au "+event1.OperationType + " pr le client " + event1.AccountNumber+" en moins de 30 min deux operations a "+
+		Helpers.distanceCalculator(event1.Latitude,
+									event1.Longitude,
+									event2.Latitude,
+									event2.Longitude) + "km de distance \u001B[0m");
+									
+		
+		Event.consumeEvent(event1);
+		Event.consumeEvent(event2);
+		
+	}
+	
+Regle2	
+
+	attribute {
+		priority = 5;
+		forwardChain = true;
+	}
+	declare {
+		Events.Transaction event1;
+		Events.Transaction event2;
+		Events.Transaction event3;
+	}
+	when {
+		event1.AccountNumber == event2.AccountNumber; 
+		event1.AccountNumber == event3.AccountNumber;
+		event1.OperationType == "PAYEMENT" && event2.OperationType == "PAYEMENT" && event3.OperationType == "PAYEMENT";
+
+		event1.Value + event2.Value + event3.Value > 10000;  // trois transactions dans 30 min avec une valeurs superieur a 10k
+	}
+	then {
+		
+		System.debugOut("\u001B[31m****** Fraude au "+event1.OperationType + " pour le client " + event1.AccountNumber+", trois transactions somme>10k \u001B[0m");
+		
+		Event.consumeEvent(event1);
+		Event.consumeEvent(event2);
+		Event.consumeEvent(event3);
+	}
+	
+
+6 - DEFINITION DU CDD
+
+laisser l'OM en in-memory
+creée un agent d'inference et specifié la destination
+PU : definir le logger et liée a l'agent
+
+	
+	

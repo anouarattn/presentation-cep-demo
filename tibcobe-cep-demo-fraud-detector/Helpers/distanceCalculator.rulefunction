@@ -1,7 +1,7 @@
 /**
  * @description 
  */
-double rulefunction Helpers.distanceCalculator {
+int rulefunction Helpers.distanceCalculator {
 	attribute {
 		validity = CONDITION;
 	}
@@ -18,6 +18,6 @@ double rulefunction Helpers.distanceCalculator {
 	    double c = 2 * Math.atanRectangularToPolar(Math.sqrt(a), Math.sqrt(1-a));
 	    double dist = earthRadius * c;
 
-	    return dist;
+	    return dist/1000;
 	}
 }

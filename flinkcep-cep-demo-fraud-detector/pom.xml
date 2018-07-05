@@ -22,26 +22,72 @@
 					<target>1.8</target>
 				</configuration>
 			</plugin>
+			<plugin>
+				<!-- Build an executable Fat JAR -->
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-jar-plugin</artifactId>
+				<version>3.1.0</version>
+				<configuration>
+					<archive>
+						<manifest>
+							<addClasspath>true</addClasspath>
+							<classpathPrefix>lib/</classpathPrefix>
+							<mainClass>business.Executor</mainClass>
+						</manifest>
+					</archive>
+				</configuration>
+			</plugin>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-shade-plugin</artifactId>
+				<version>3.1.0</version>
+				<executions>
+					<execution>
+						<phase>package</phase>
+						<goals>
+							<goal>shade</goal>
+						</goals>
+						<configuration>
+							<transformers>
+								<transformer
+									implementation="org.apache.maven.plugins.shade.resource.ManifestResourceTransformer">
+									<mainClass>business.Executor</mainClass>
+								</transformer>
+								<transformer
+									implementation="org.apache.maven.plugins.shade.resource.AppendingTransformer">
+									<resource>reference.conf</resource>
+								</transformer>
+							</transformers>
+							<relocations>
+								<relocation>
+									<pattern>org.codehaus.plexus.util</pattern>
+									<shadedPattern>org.shaded.plexus.util</shadedPattern>
+									<excludes>
+										<exclude>org.codehaus.plexus.util.xml.Xpp3Dom</exclude>
+										<exclude>org.codehaus.plexus.util.xml.pull.*</exclude>
+									</excludes>
+								</relocation>
+							</relocations>
+						</configuration>
+					</execution>
+				</executions>
+			</plugin>
 		</plugins>
 	</build>
 
 	<dependencies>
 		<!-- Apache Flink dependencies -->
-		<!-- These dependencies are provided, because they should not be packaged 
-			into the JAR file. -->
+
 		<dependency>
 			<groupId>org.apache.flink</groupId>
 			<artifactId>flink-java</artifactId>
 			<version>${flink.version}</version>
-			<scope>provided</scope>
 		</dependency>
 		<dependency>
 			<groupId>org.apache.flink</groupId>
 			<artifactId>flink-streaming-java_${scala.binary.version}</artifactId>
 			<version>${flink.version}</version>
-			<scope>provided</scope>
 		</dependency>
-
 		<dependency>
 			<groupId>org.apache.flink</groupId>
 			<artifactId>flink-connector-kafka-0.10_${scala.binary.version}</artifactId>
@@ -52,8 +98,6 @@
 			<artifactId>flink-cep_2.11</artifactId>
 			<version>1.5.0</version>
 		</dependency>
-
-
 	</dependencies>
 
 </project>

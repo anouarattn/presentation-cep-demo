@@ -1,9 +1,12 @@
 package Helpers;
 
+
+/* Calculateur de distance entre deux positions gps */
+
 public class DistanceCalculator {
 	
 	
-	public static double calculate(double lat1, double lng1, double lat2, double lng2)
+	public static int calculate(double lat1, double lng1, double lat2, double lng2)
 	{
 		double earthRadius = 6371000; //meters
 	    double dLat = Math.toRadians(lat2-lat1);
@@ -14,7 +17,7 @@ public class DistanceCalculator {
 	    double c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1-a));
 	    double dist = earthRadius * c;
 
-	    return dist;
+	    return (int) (dist/1000);
 	}
 
 }

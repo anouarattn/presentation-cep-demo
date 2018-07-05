@@ -10,7 +10,6 @@ import serialization.EventDeserializationSchema;
 
 public class I {
 	public static String KAFKA_BROKERS = "kafka1:9092";
-	public static String CLIENT_ID = "client1";
 	public static String GROUP_ID_CONFIG = "be_group";
 	public static String TOPIC_NAME = "T.CustomerTransaction";
 	

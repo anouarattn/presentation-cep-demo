@@ -14,18 +14,26 @@ rule Rules.regle1 {
 	when {
 		event1.AccountNumber == event2.AccountNumber;
 		
-		(event1.OperationType == "Payment" && event2.OperationType == "Payment")
-		|| (event1.OperationType == "CashWithdrawal" && event2.OperationType == "CashWithdrawal");
+		(event1.OperationType == "PAYEMENT" && event2.OperationType == "PAYEMENT")
+		|| (event1.OperationType == "WITHDRAWAL" && event2.OperationType == "WITHDRAWAL");
 		
 		Helpers.distanceCalculator(event1.Latitude,
 									event1.Longitude,
-									event1.Latitude,
-									event1.Longitude)>1000; // distance entre les deux emplacements des transactions superieur a 100km
+									event2.Latitude,
+									event2.Longitude)>100; // distance entre les deux emplacements des transactions superieur a 100km
 		
 	}
 	then {
 		
-		System.debugOut("suciptiblement fraude");
+		System.debugOut("\u001B[31m****** Fraude au "+event1.OperationType + " pr le client " + event1.AccountNumber+" en moins de 30 min deux operations a "+
+		Helpers.distanceCalculator(event1.Latitude,
+									event1.Longitude,
+									event2.Latitude,
+									event2.Longitude) + "km de distance \u001B[0m");
+									
+		
+		Event.consumeEvent(event1);
+		Event.consumeEvent(event2);
 		
 	}
 }
