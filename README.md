@@ -1,9 +1,9 @@
 # presentation-cep-demo
 
 
-l'exemple traiter dans la demo est celui presenté dans la page 11 du fichier PREZ CEP.pptx
+l'exemple traité dans la demo est celui presenté dans la page 11 du fichier PREZ CEP.pptx
 
-On veut detecter la cas fraude bancaire lorsque une personne fait une transaction avec sa carte et juste après dans un interval de 30 min une autre personne qui se trouve a une distance de plus de 100 km va utiliser les informations de cette meme carte pour faire une transaction, la personne a qui appartient la carte ne peux pas se deplacer a plus de 100 km dans un interval de 30 min, les deux exemples avec apache flink cep et tibco be permettent de detecter ce cas. on filtre les transactions qui sont derierre un proxy.
+On veut detecter la cas fraude bancaire lorsqu'une personne fait une transaction avec sa carte et juste après dans un interval de 30 min une autre personne qui se trouve a une distance de plus de 100 km va utiliser les informations de cette meme carte pour faire une transaction, la personne a qui appartient la carte ne peux pas se deplacer a plus de 100 km dans un interval de 30 min, les deux exemples avec apache flink cep et tibco be permettent de detecter ce cas de fraude. on filtre les transactions qui sont derierre un proxy.
 
 ### Prérequis
 
