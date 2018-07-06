@@ -1,0 +1,12 @@
+- to start kafka cluster : 
+	docker-compose -f zk-single-kafka-single.yml up 
+  to start in backgroun : 
+	docker-compose -f zk-single-kafka-single.yml up -d
+  
+- start bash terminal : 
+	docker exec -it -u cp-kafka kafka-docker_kafka1_1 /bin/bash
+- create topic : 
+	/usr/bin/kafka-topics --create --zookeeper zoo1:2181 --replication-factor 1 --partitions 2 --topic T.CustomerTransaction
+- send message : 
+	/usr/bin/kafka-console-producer.sh --broker-list kafka1:9092 --topic T.CustomerTransaction
+
